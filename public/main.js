@@ -55,6 +55,15 @@ document.getElementById('joinCustomRoomBtn').addEventListener('click', () => {
     if (roomId) joinGroup('custom', roomId);
 });
 
+document.getElementById('customRoomBtn').addEventListener('click', () => {
+    socket.emit('create-custom-room', (roomId) => {
+        document.getElementById('roomIdDisplay').textContent = `Room ID: ${roomId}`; // Display the room ID
+        joinGroup('custom', roomId); // Optionally join the room immediately
+    });
+});
+
+
+
 messageForm.addEventListener('submit', (e) => {
     e.preventDefault();
     sendMessage();
@@ -160,3 +169,6 @@ function clearFeedback() {
         element.parentNode.removeChild(element);
     });
 }
+
+
+

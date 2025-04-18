@@ -1,0 +1,106 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meme Movie Guess Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Meme Movie Guess Game</h2>
+    <div id="joinGame">
+        <input type="text" id="joiningIdInput" placeholder="Enter Joining ID">
+        <button id="joinGameBtn">Join Game</button>
+    </div>
+    
+    
+    <div id="gameInfo">
+        <p>Team: <span id="teamName"></span></p>
+        <p id="redTeamCount">Red Team Count: 0</p>
+        <p id="blueTeamCount">Blue Team Count: 0</p>
+        <p>Red Team Score: <span id="redScore">0</span></p>
+        <p>Blue Team Score: <span id="blueScore">0</span></p>
+    </div>
+    <div id="roomIdDisplay"></div>
+
+    
+    <div id="memeBox">
+        <img id="memeImage" src="" alt="Meme will appear here" width="400">
+    </div>
+    <div id="inputBox">
+        <input type="text" id="guessInput" placeholder="Enter movie name">
+        <button id="submitGuess">Submit</button>
+    </div>
+    <div id="result"></div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="game.js"></script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Movie Guess Game</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body{
+            background-color: black;
+            color: whitesmoke;
+        }
+    </style>
+</head>
+<body>
+    <center>
+    <button id="fullscreenBtn" class="fullscreen-btn">⛶</button>
+    <div class="container">
+        <h2>Meme Movie Guess Game</h2>
+        <div id="joinGame" class="join-game">
+            <input type="text" id="joiningIdInput" placeholder="Enter Joining ID">
+            <button id="joinGameBtn">Join Game</button>
+        </div>
+        
+        <div id="gameInfo" class="game-info">
+            <p>Team: <span id="teamName"></span></p>
+            <p id="redTeamCount">Red Team Count: 0</p>
+            <p id="blueTeamCount">Blue Team Count: 0</p>
+            <p>Red Team Score: <span id="redScore">0</span></p>
+            <p>Blue Team Score: <span id="blueScore">0</span></p>
+        </div>
+        <div id="roomIdDisplay" class="room-id"></div>
+
+        <div id="memeBox" class="meme-box">
+            <img id="memeImage" src="" alt="Meme will appear here">
+        </div>
+        <div id="inputBox" class="input-box">
+            <input type="text" id="guessInput" placeholder="Enter movie name">
+            <button id="submitGuess">Submit</button>
+        </div>
+        <div id="result" class="result"></div>
+    </div>
+</center>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="game.js"></script>
+    <script>
+        // Fullscreen toggle functionality
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`Fullscreen error: ${err.message}`);
+                });
+                fullscreenBtn.textContent = '⤴';
+            } else {
+                document.exitFullscreen();
+                fullscreenBtn.textContent = '⛶';
+            }
+        });
+
+        // Update button icon on fullscreen change
+        document.addEventListener('fullscreenchange', () => {
+            fullscreenBtn.textContent = document.fullscreenElement ? '⤴' : '⛶';
+        });
+    </script>
+</body>
+</html>

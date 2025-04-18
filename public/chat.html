@@ -1,51 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <title>Chat App</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chat App</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      background-color: black;
+      color: wheat;
+      font-family: Arial, sans-serif;
+    }
+
+    .hamburger {
+      display: none;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      font-size: 24px;
+      background-color: black;
+      color: wheat;
+      border: none;
+      z-index: 1100;
+      cursor: pointer;
+    }
+
+    .fullscreen-btn {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      font-size: 24px;
+      background-color: black;
+      color: wheat;
+      border: none;
+      z-index: 1100;
+      cursor: pointer;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+    }
+
+    .sidebar {
+      width: 25%;
+      background-color: black;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .sidebar input,
+    .sidebar button {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      background-color: #222;
+      color: wheat;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .main {
+      width: 75%;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .title {
+      font-size: 2rem;
+    }
+
+    .name {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    .name span {
+      margin-right: 10px;
+    }
+
+    .name-input {
+      padding: 8px;
+      width: 100%;
+      border: none;
+      background-color: #222;
+      color: wheat;
+      border-radius: 4px;
+    }
+
+    .message-container {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+      max-height: 50vh;
+      overflow-y: auto;
+    }
+
+    .message-form {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+
+    .message-input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      background-color: #222;
+      color: wheat;
+      border-radius: 4px;
+    }
+
+    .send-button {
+      padding: 10px 15px;
+      background-color: #444;
+      border: none;
+      color: wheat;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .v-divider {
+      width: 1px;
+      background-color: wheat;
+      height: 30px;
+    }
+
+    #ad-container {
+      padding: 10px;
+      background-color: #111;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    /* Responsive: for smaller screens */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      #grp {
+        margin-top: 5vh;
+      }
+
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 70%;
+        height: 100vh;
+        transform: translateX(-100%);
+        background-color: black;
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .main {
+        width: 100%;
+        padding-top: 60px;
+      }
+    
+    }
+  </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h3>Groups</h3>
-        <button id="cityGroupBtn">Join City Group</button>
-        <button id="collegeGroupBtn">Join College Group</button>
-        <button id="universityGroupBtn">Join University Group</button>
-        <button id="customRoomBtn">Create Custom Room</button>
-        <input type="text" id="customRoomInput" placeholder="Enter Custom Room ID">
-        <button id="joinCustomRoomBtn">Join Custom Room</button>
-        <div id="ad-container">
-            <p>Advertisement</p>
-        </div>
-        <button id="logoutBtn" style="margin-top: auto;">Logout</button>
+  <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+  <button class="fullscreen-btn" id="fullscreen-btn"><i class="fas fa-expand"></i></button>
+
+  <div class="container">
+    <div class="sidebar" id="sidebar">
+      <h3 id="grp">Groups</h3>
+      <button id="cityGroupBtn">Join City Group</button>
+      <button id="collegeGroupBtn">Join College Group</button>
+      <button id="universityGroupBtn">Join University Group</button>
+      <button id="customRoomBtn">Create Custom Room</button>
+      <input type="text" id="customRoomInput" placeholder="Enter Custom Room ID">
+      <button id="joinCustomRoomBtn">Join Custom Room</button>
+      <button id="logoutBtn" style="margin-top: auto; background-color: red; color: white;">Logout</button>
     </div>
 
     <div class="main">
-        <h1 class="title">iChat 💬</h1>
-        <div class="name">
-            <span><i class="far fa-user"></i></span>
-            <input type="text" id="name-input" class="name-input" readonly>
-        </div>
+      <h1 class="title">Hood 💬</h1>
+      <div class="name">
+        <span><i class="far fa-user"></i></span>
+        <input type="text" id="name-input" class="name-input" readonly>
+      </div>
 
-        <ul class="message-container" id="message-container"></ul>
+      <ul class="message-container" id="message-container"></ul>
+      <form class="message-form" id="message-form">
+        <input type="text" name="message" id="message-input" class="message-input">
+        <div class="v-divider"></div>
+        <button type="submit" class="send-button">
+          send <span><i class="fas fa-paper-plane"></i></span>
+        </button>
+      </form>
 
-        <form class="message-form" id="message-form">
-            <input type="text" name="message" id="message-input" class="message-input">
-            <div class="v-divider"></div>
-            <button type="submit" class="send-button">
-                send <span><i class="fas fa-paper-plane"></i></span>
-            </button>
-        </form>
-        <h3 class="clients-total" id="client-total">Total clients: 0</h3>
+      <h3 class="clients-total" id="client-total">Total clients: 0</h3>
     </div>
+  </div>
 
-    <audio id="messageToneSend" src="/message-tone.mp3" preload="auto"></audio>
-    <audio id="messageToneReceive" src="/message-receive.mp3" preload="auto"></audio>
+  <audio id="messageToneSend" src="/message-tone.mp3" preload="auto"></audio>
+  <audio id="messageToneReceive" src="/message-receive.mp3" preload="auto"></audio>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/moment.min.js"></script>
-    <script src="main.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/moment.min.js"></script>
+  <script src="main.js"></script>
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+    // Sidebar toggle
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+
+    // Fullscreen toggle
+    fullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch((err) => {
+          console.error(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+        fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+      } else {
+        document.exitFullscreen().catch((err) => {
+          console.error(`Error attempting to exit fullscreen: ${err.message}`);
+        });
+        fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+      }
+    });
+
+    // Update icon when fullscreen state changes
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) {
+        fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+      } else {
+        fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+      }
+    });
+  </script>
 </body>
 </html>
